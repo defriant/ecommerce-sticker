@@ -58,9 +58,7 @@ function getLaminasi() {
                 };
 
                 $('#delete-id-laminasi').val(data.id);
-                $('#delete-laminasi-warning-message').html(
-                    `Hapus data ${data.nama} ?`
-                );
+                $('#delete-laminasi-warning-message').html(`Hapus data ${data.nama} ?`);
                 $('#modal-delete-laminasi').modal('show');
             });
         }
@@ -107,9 +105,7 @@ $('#submit-update-laminasi').on('click', function () {
     $('#submit-update-laminasi').attr('disabled', true);
     ajaxRequest
         .post({
-            url:
-                '/admin/custom/general/laminasi/update/' +
-                $('#update-id-laminasi').val(),
+            url: '/admin/custom/general/laminasi/update/' + $('#update-id-laminasi').val(),
             data: params,
         })
         .then((res) => {

@@ -38,10 +38,7 @@ $('#tambah-gambar-input-1').on('change', function () {
     fileReader.readAsDataURL(fileObject);
     fileReader.onload = function () {
         var result = fileReader.result;
-        $('#tambah-gambar-preview-1').css(
-            'background-image',
-            `url('${result}')`
-        );
+        $('#tambah-gambar-preview-1').css('background-image', `url('${result}')`);
     };
 });
 
@@ -53,10 +50,7 @@ $('#tambah-gambar-input-2').on('change', function () {
     fileReader.readAsDataURL(fileObject);
     fileReader.onload = function () {
         var result = fileReader.result;
-        $('#tambah-gambar-preview-2').css(
-            'background-image',
-            `url('${result}')`
-        );
+        $('#tambah-gambar-preview-2').css('background-image', `url('${result}')`);
     };
 });
 
@@ -68,10 +62,7 @@ $('#tambah-gambar-input-3').on('change', function () {
     fileReader.readAsDataURL(fileObject);
     fileReader.onload = function () {
         var result = fileReader.result;
-        $('#tambah-gambar-preview-3').css(
-            'background-image',
-            `url('${result}')`
-        );
+        $('#tambah-gambar-preview-3').css('background-image', `url('${result}')`);
     };
 });
 
@@ -82,12 +73,12 @@ $('#form-tambah-produk').submit(function (e) {
     if ($('#tambah-gambar-input-1').val().length == 0) {
         $('#tambah-gambar-preview-1').addClass('invalid');
         $('#invalid-gambar-1').show();
-    } else if ($('#tambah-gambar-input-2').val().length == 0) {
-        $('#tambah-gambar-preview-2').addClass('invalid');
-        $('#invalid-gambar-2').show();
-    } else if ($('#tambah-gambar-input-3').val().length == 0) {
-        $('#tambah-gambar-preview-3').addClass('invalid');
-        $('#invalid-gambar-3').show();
+        // } else if ($('#tambah-gambar-input-2').val().length == 0) {
+        //     $('#tambah-gambar-preview-2').addClass('invalid');
+        //     $('#invalid-gambar-2').show();
+        // } else if ($('#tambah-gambar-input-3').val().length == 0) {
+        //     $('#tambah-gambar-preview-3').addClass('invalid');
+        //     $('#invalid-gambar-3').show();
     } else if ($('#tambah-kategori').val().length == 0) {
         $('#tambah-kategori').addClass('invalid');
         $('#invalid-kategori').show();
@@ -118,18 +109,9 @@ $('#form-tambah-produk').submit(function (e) {
             success: function (result) {
                 produk_data();
                 $('#modal-tambah-close').click();
-                $('#tambah-gambar-preview-1').attr(
-                    'style',
-                    `background-image: url(${gambar_default});`
-                );
-                $('#tambah-gambar-preview-2').attr(
-                    'style',
-                    `background-image: url(${gambar_default});`
-                );
-                $('#tambah-gambar-preview-3').attr(
-                    'style',
-                    `background-image: url(${gambar_default});`
-                );
+                $('#tambah-gambar-preview-1').attr('style', `background-image: url(${gambar_default});`);
+                $('#tambah-gambar-preview-2').attr('style', `background-image: url(${gambar_default});`);
+                $('#tambah-gambar-preview-3').attr('style', `background-image: url(${gambar_default});`);
                 $('#btn-tambah-produk').show();
                 $('#modal-tambah-close').show();
                 $('#tambah-loading').hide();
@@ -254,19 +236,13 @@ $('#modal-update-produk').on('show.bs.modal', function (e) {
     // modal.find('.modal-body #update-gambar-preview').attr('src', gambar);
     // modal.find('.modal-body #update-gambar-input').val('');
 
-    modal
-        .find('.modal-body #update-gambar-preview-1')
-        .css('background-image', `url('${gambar1}')`);
+    modal.find('.modal-body #update-gambar-preview-1').css('background-image', `url('${gambar1}')`);
     modal.find('.modal-body #update-gambar-input-1').val('');
 
-    modal
-        .find('.modal-body #update-gambar-preview-2')
-        .css('background-image', `url('${gambar2}')`);
+    modal.find('.modal-body #update-gambar-preview-2').css('background-image', `url('${gambar2}')`);
     modal.find('.modal-body #update-gambar-input-2').val('');
 
-    modal
-        .find('.modal-body #update-gambar-preview-3')
-        .css('background-image', `url('${gambar3}')`);
+    modal.find('.modal-body #update-gambar-preview-3').css('background-image', `url('${gambar3}')`);
     modal.find('.modal-body #update-gambar-input-3').val('');
 
     modal.find('.modal-body #update-kategori').val(kategori);
@@ -282,10 +258,7 @@ $('#update-gambar-input-1').on('change', function () {
     fileReader.readAsDataURL(fileObject);
     fileReader.onload = function () {
         var result = fileReader.result;
-        $('#update-gambar-preview-1').css(
-            'background-image',
-            `url('${result}')`
-        );
+        $('#update-gambar-preview-1').css('background-image', `url('${result}')`);
     };
 });
 
@@ -295,10 +268,7 @@ $('#update-gambar-input-2').on('change', function () {
     fileReader.readAsDataURL(fileObject);
     fileReader.onload = function () {
         var result = fileReader.result;
-        $('#update-gambar-preview-2').css(
-            'background-image',
-            `url('${result}')`
-        );
+        $('#update-gambar-preview-2').css('background-image', `url('${result}')`);
     };
 });
 
@@ -308,10 +278,7 @@ $('#update-gambar-input-3').on('change', function () {
     fileReader.readAsDataURL(fileObject);
     fileReader.onload = function () {
         var result = fileReader.result;
-        $('#update-gambar-preview-3').css(
-            'background-image',
-            `url('${result}')`
-        );
+        $('#update-gambar-preview-3').css('background-image', `url('${result}')`);
     };
 });
 

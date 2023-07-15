@@ -75,13 +75,13 @@ class AdminController extends Controller
         $request->file('gambar_1')->move('user/barang_img/', $id_barang . '-' . $time . '-image-1.' . $extension);
         $gambar[] = $id_barang . '-' . $time . '-image-1.' . $extension;
 
-        $extension = $request->file('gambar_2')->getClientOriginalExtension();
-        $request->file('gambar_2')->move('user/barang_img/', $id_barang . '-' . $time . '-image-2.' . $extension);
-        $gambar[] = $id_barang . '-' . $time . '-image-2.' . $extension;
+        // $extension = $request->file('gambar_2')->getClientOriginalExtension();
+        // $request->file('gambar_2')->move('user/barang_img/', $id_barang . '-' . $time . '-image-2.' . $extension);
+        // $gambar[] = $id_barang . '-' . $time . '-image-2.' . $extension;
 
-        $extension = $request->file('gambar_3')->getClientOriginalExtension();
-        $request->file('gambar_3')->move('user/barang_img/', $id_barang . '-' . $time . '-image-3.' . $extension);
-        $gambar[] = $id_barang . '-' . $time . '-image-3.' . $extension;
+        // $extension = $request->file('gambar_3')->getClientOriginalExtension();
+        // $request->file('gambar_3')->move('user/barang_img/', $id_barang . '-' . $time . '-image-3.' . $extension);
+        // $gambar[] = $id_barang . '-' . $time . '-image-3.' . $extension;
 
         Barang::create([
             'id' => $id_barang,
@@ -113,9 +113,9 @@ class AdminController extends Controller
         if ($request->hasFile('gambar_1')) {
             $imageName = $barang->barangimg[0]->gambar;
             $path = public_path('user/barang_img/' . $imageName);
-            if (file_exists($path)) {
-                unlink($path);
-            }
+            // if (file_exists($path)) {
+            //     unlink($path);
+            // }
 
             $extension = $request->file('gambar_1')->getClientOriginalExtension();
             $request->file('gambar_1')->move('user/barang_img/', $id . '-' . $time . '-image-1.' . $extension);
@@ -129,35 +129,35 @@ class AdminController extends Controller
             ]);
         }
 
-        if ($request->hasFile('gambar_2')) {
-            $imageName = $barang->barangimg[1]->gambar;
-            $path = public_path('user/barang_img/' . $imageName);
-            if (file_exists($path)) {
-                unlink($path);
-            }
+        // if ($request->hasFile('gambar_2')) {
+        //     $imageName = $barang->barangimg[1]->gambar;
+        //     $path = public_path('user/barang_img/' . $imageName);
+        //     if (file_exists($path)) {
+        //         unlink($path);
+        //     }
 
-            $extension = $request->file('gambar_2')->getClientOriginalExtension();
-            $request->file('gambar_2')->move('user/barang_img/', $id . '-' . $time . '-image-2.' . $extension);
+        //     $extension = $request->file('gambar_2')->getClientOriginalExtension();
+        //     $request->file('gambar_2')->move('user/barang_img/', $id . '-' . $time . '-image-2.' . $extension);
 
-            $barang->barangimg[1]->update([
-                'gambar' => $id . '-' . $time . '-image-2.' . $extension
-            ]);
-        }
+        //     $barang->barangimg[1]->update([
+        //         'gambar' => $id . '-' . $time . '-image-2.' . $extension
+        //     ]);
+        // }
 
-        if ($request->hasFile('gambar_3')) {
-            $imageName = $barang->barangimg[2]->gambar;
-            $path = public_path('user/barang_img/' . $imageName);
-            if (file_exists($path)) {
-                unlink($path);
-            }
+        // if ($request->hasFile('gambar_3')) {
+        //     $imageName = $barang->barangimg[2]->gambar;
+        //     $path = public_path('user/barang_img/' . $imageName);
+        //     if (file_exists($path)) {
+        //         unlink($path);
+        //     }
 
-            $extension = $request->file('gambar_3')->getClientOriginalExtension();
-            $request->file('gambar_3')->move('user/barang_img/', $id . '-' . $time . '-image-3.' . $extension);
+        //     $extension = $request->file('gambar_3')->getClientOriginalExtension();
+        //     $request->file('gambar_3')->move('user/barang_img/', $id . '-' . $time . '-image-3.' . $extension);
 
-            $barang->barangimg[2]->update([
-                'gambar' => $id . '-' . $time . '-image-3.' . $extension
-            ]);
-        }
+        //     $barang->barangimg[2]->update([
+        //         'gambar' => $id . '-' . $time . '-image-3.' . $extension
+        //     ]);
+        // }
 
         Barang::where('id', $id)->update([
             'jenis' => $request->kategori,
@@ -176,7 +176,7 @@ class AdminController extends Controller
         $barangImage = BarangImg::where('id_barang', $id)->get();
         foreach ($barangImage as $img) {
             $path = public_path('user/barang_img/' . $img->gambar);
-            unlink($path);
+            // unlink($path);
         }
         BarangImg::where('id_barang', $id)->delete();
 

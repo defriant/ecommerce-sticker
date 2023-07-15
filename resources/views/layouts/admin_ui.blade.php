@@ -128,12 +128,6 @@
                                                 Decal Mobil
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="/admin/custom/sticker"
-                                                class="{{ Request::is('admin/custom/sticker') ? 'active' : '' }}">
-                                                Sticker
-                                            </a>
-                                        </li>
                                     </ul>
                                 </div>
                             </li>
@@ -253,18 +247,17 @@
 
         @if (Request::is('admin/custom/decal-motor'))
             <script src="{{ asset('admins/scripts/customs/part-script.js') }}"></script>
-            <script src="{{ asset('admins/scripts/customs/decal_motor.js') }}"></script>
         @endif
 
         @if (Request::is('admin/custom/striping-motor'))
             <script src="{{ asset('admins/scripts/customs/part-script.js') }}"></script>
-            <script src="{{ asset('admins/scripts/customs/striping_motor.js') }}"></script>
         @endif
 
         @if (Request::is('admin/custom/decal-mobil'))
             <script src="{{ asset('admins/scripts/customs/part-script.js') }}"></script>
-            <script src="{{ asset('admins/scripts/customs/decal_mobil.js') }}"></script>
         @endif
+
+        @yield('custom_script')
     @endif
 
     @auth

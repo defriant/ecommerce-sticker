@@ -58,9 +58,7 @@ function getBahan() {
                 };
 
                 $('#delete-id-bahan').val(data.id);
-                $('#delete-bahan-warning-message').html(
-                    `Hapus data ${data.nama} ?`
-                );
+                $('#delete-bahan-warning-message').html(`Hapus data ${data.nama} ?`);
                 $('#modal-delete-bahan').modal('show');
             });
         }
@@ -107,9 +105,7 @@ $('#submit-update-bahan').on('click', function () {
     $('#submit-update-bahan').attr('disabled', true);
     ajaxRequest
         .post({
-            url:
-                '/admin/custom/general/bahan/update/' +
-                $('#update-id-bahan').val(),
+            url: '/admin/custom/general/bahan/update/' + $('#update-id-bahan').val(),
             data: params,
         })
         .then((res) => {

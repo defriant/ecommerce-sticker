@@ -4,15 +4,20 @@
         <button data-kategori="all" class="btn-kategori active">
             <h5 style="font-size: 16px">Semua Produk</b></h5>
         </button>
-        <button data-kategori="makanan" class="btn-kategori">
-            <h5 style="font-size: 16px">Makanan Hewan</b></h5>
+        <button data-kategori="decal" class="btn-kategori">
+            <h5 style="font-size: 16px">Decal</b></h5>
         </button>
-        <button data-kategori="obat" class="btn-kategori">
-            <h5 style="font-size: 16px">Obat obatan</b></h5>
+        <button data-kategori="striping" class="btn-kategori">
+            <h5 style="font-size: 16px">Striping</b></h5>
         </button>
-        <button data-kategori="custom" class="btn-kategori">
-            <h5 style="font-size: 16px">Custom</b></h5>
+        <button data-kategori="sticker" class="btn-kategori">
+            <h5 style="font-size: 16px">Sticker</b></h5>
         </button>
+        @auth
+            <button data-kategori="custom" class="btn-kategori">
+                <h5 style="font-size: 16px">Custom</b></h5>
+            </button>
+        @endauth
     </div>
     <div class="product-easy">
         <div class="container">

@@ -71,10 +71,7 @@ $('.month-picker').datepicker({
     showButtonPanel: true,
     dateFormat: 'MM yy',
     onClose: function (dateText, inst) {
-        $(this).datepicker(
-            'setDate',
-            new Date(inst.selectedYear, inst.selectedMonth, 1)
-        );
+        $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
     },
 });
 
@@ -128,20 +125,7 @@ function timestampToDate(format, timestamp) {
                 break;
 
             case 'M':
-                const monthArray = [
-                    'Jan',
-                    'Feb',
-                    'Mar',
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                ];
+                const monthArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 formattedDate += monthArray[time.getMonth()];
                 break;
 

@@ -1399,6 +1399,7 @@
 
 .custom-page-section .title {
     font-weight: bold;
+    font-size: 16px;
 }
 
 .custom-page-section .cards {
@@ -1470,7 +1471,7 @@
 
 .grid-preview {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 3rem;
 }
 
@@ -1484,9 +1485,27 @@
 }
 
 .grid-preview .image-wrapper .image {
-    width: 300px;
+    width: 100%;
     height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.grid-preview .text-price {
+    font-size: 14px;
+    text-align: center;
+}
+
+.btn-checkout-custom {
+    border: 2px solid #FDA30E;
+    background-color: #FDA30E;
+    border-radius: 6px;
+    font-weight: 500;
+    color: #FFF;
+    font-size: 18px;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: .25rem .5rem;
 }

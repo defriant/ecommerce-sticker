@@ -1,18 +1,23 @@
 @extends('layouts.user_ui')
 @section('content')
     <div class="top-kategori">
-        <button data-kategori="all" class="btn-kategori active">
+        <button data-kategori="all" class="btn-kategori">
             <h5 style="font-size: 16px">Semua Produk</b></h5>
         </button>
-        <button data-kategori="makanan" class="btn-kategori">
-            <h5 style="font-size: 16px">Makanan Hewan</b></h5>
+        <button data-kategori="decal" class="btn-kategori">
+            <h5 style="font-size: 16px">Decal</b></h5>
         </button>
-        <button data-kategori="obat" class="btn-kategori">
-            <h5 style="font-size: 16px">Obat obatan</b></h5>
+        <button data-kategori="striping" class="btn-kategori">
+            <h5 style="font-size: 16px">Striping</b></h5>
         </button>
-        <button data-kategori="custom" class="btn-kategori">
-            <h5 style="font-size: 16px">Custom</b></h5>
+        <button data-kategori="sticker" class="btn-kategori">
+            <h5 style="font-size: 16px">Sticker</b></h5>
         </button>
+        @auth
+            <button data-kategori="custom" class="btn-kategori">
+                <h5 style="font-size: 16px">Custom</b></h5>
+            </button>
+        @endauth
     </div>
     <div class="product-easy">
         <div class="container">
@@ -39,53 +44,15 @@
 
                             <div class="single">
                                 <div class="container">
-                                    {{-- <div class="col-md-6 single-right-left animated wow slideInUp animated" data-wow-delay=".5s"
-                                    style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
-                                    <div class="thumb-image"> <img src="{{ asset('user/barang_img/'.$data->gambar) }}"
-                                data-imagezoom="true"
-                                class="img-responsive" width="450px" style="border: 1px solid rgb(185, 185, 185)">
-                            </div>
-                        </div> --}}
                                     <div class="col-md-6 single-right-left animated wow slideInUp animated"
                                         data-wow-delay=".5s"
                                         style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
-                                        <div class="grid images_3_of_2">
-                                            <div class="flexslider">
-                                                <!-- FlexSlider -->
-                                                <script>
-                                                    // Can also be used with $(document).ready()
-                                                    $(window).load(function() {
-                                                        $('.flexslider').flexslider({
-                                                            animation: "slide",
-                                                            controlNav: "thumbnails"
-                                                        });
-                                                    });
-                                                </script>
-                                                <!-- //FlexSlider-->
-                                                <ul class="slides">
-                                                    <li
-                                                        data-thumb="{{ asset('user/barang_img/' . $data->barangimg[0]->gambar) }}">
-                                                        <div class="thumb-image"> <img
-                                                                src="{{ asset('user/barang_img/' . $data->barangimg[0]->gambar) }}"
-                                                                data-imagezoom="true" class="img-responsive"> </div>
-                                                    </li>
-                                                    <li
-                                                        data-thumb="{{ asset('user/barang_img/' . $data->barangimg[1]->gambar) }}">
-                                                        <div class="thumb-image"> <img
-                                                                src="{{ asset('user/barang_img/' . $data->barangimg[1]->gambar) }}"
-                                                                data-imagezoom="true" class="img-responsive"> </div>
-                                                    </li>
-                                                    <li
-                                                        data-thumb="{{ asset('user/barang_img/' . $data->barangimg[2]->gambar) }}">
-                                                        <div class="thumb-image"> <img
-                                                                src="{{ asset('user/barang_img/' . $data->barangimg[2]->gambar) }}"
-                                                                data-imagezoom="true" class="img-responsive"> </div>
-                                                    </li>
-                                                </ul>
-                                                <div class="clearfix"></div>
-                                            </div>
+                                        <div class="thumb-image"> <img src="{{ asset('user/barang_img/' . $data->gambar) }}"
+                                                data-imagezoom="true" class="img-responsive" width="450px"
+                                                style="border: 1px solid rgb(185, 185, 185)">
                                         </div>
                                     </div>
+
                                     <div class="col-md-6 single-right-left simpleCart_shelfItem animated wow slideInRight animated"
                                         data-wow-delay=".5s"
                                         style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">

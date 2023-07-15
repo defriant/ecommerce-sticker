@@ -101,7 +101,27 @@ function getActiveCustomTab(type) {
 
             switch (type) {
                 case 'decal_motor':
-                    customDecalMotor();
+                    initiateCustomScript({
+                        tipe: 'decal_motor',
+                        nama: 'motor',
+                        sections: ['spakbor_depan', 'covershock', 'batok_kepala', 'body_depan', 'sayap', 'body_samping', 'arm', 'spakbor_belakang'],
+                    });
+                    break;
+
+                case 'decal_mobil':
+                    initiateCustomScript({
+                        tipe: 'decal_mobil',
+                        nama: 'mobil',
+                        sections: ['depan', 'samping', 'pintu', 'belakang', 'kaca_depan', 'kaca_belakang'],
+                    });
+                    break;
+
+                case 'striping_motor':
+                    initiateCustomScript({
+                        tipe: 'striping_motor',
+                        nama: 'motor',
+                        sections: ['spakbor_depan', 'covershock', 'batok_kepala', 'body_depan', 'sayap', 'body_samping', 'arm', 'spakbor_belakang'],
+                    });
                     break;
 
                 default:
@@ -122,105 +142,230 @@ function customPage() {
     getActiveCustomTab(currentActive);
 }
 
-function customDecalMotor() {
-    const decalMotorData = {
-        spakbor: null,
-        sayap: null,
+function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
+    const customData = {
         bahan: null,
         laminasi: null,
     };
 
-    function setPreview() {
-        if (decalMotorData.spakbor !== null) {
-            $('#preview-spakbor').html(
-                `<img src="${decalMotorData.spakbor.url}" style="width: 100%; height: 100%">`
-            );
-        } else {
-            $('#preview-spakbor')
-                .html(`<div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-                <i class="fas fa-ban" style="font-size: 75px; opacity: .5;"></i>
-                <span style="font-weight: bold; opacity: .5;">Tanpa sticker</span>
-            </div>`);
-        }
+    sections.forEach((section) => {
+        customData[section] = null;
+    });
 
-        if (decalMotorData.sayap !== null) {
-            $('#preview-sayap').html(
-                `<img src="${decalMotorData.sayap.url}" style="width: 100%; height: 100%">`
-            );
-        } else {
-            $('#preview-sayap')
-                .html(`<div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
-                <i class="fas fa-ban" style="font-size: 75px; opacity: .5;"></i>
-                <span style="font-weight: bold; opacity: .5;">Tanpa sticker</span>
-            </div>`);
-        }
+    function calculateTotal() {
+        let showCheckout = false;
+        let totalPrice = 0;
 
-        if (decalMotorData.bahan !== null) {
-            $('#preview-bahan').html(`${decalMotorData.bahan}`);
-        } else {
-            $('#preview-bahan').html(`-`);
-        }
+        sections.forEach((section) => {
+            if (customData[section] !== null) {
+                showCheckout = true;
+                totalPrice += parseInt(customData[section].price);
+            }
+        });
 
-        if (decalMotorData.laminasi !== null) {
-            $('#preview-laminasi').html(`${decalMotorData.laminasi}`);
+        if (customData.bahan === null) showCheckout = false;
+        if (customData.laminasi === null) showCheckout = false;
+
+        if (showCheckout) $(`#btn-checkout-${nama}`).show();
+        if (!showCheckout) $(`#btn-checkout-${nama}`).hide();
+
+        if (customData.bahan !== null) totalPrice += parseInt(customData.bahan.price);
+        if (customData.laminasi !== null) totalPrice += parseInt(customData.laminasi.price);
+
+        if (totalPrice !== 0) {
+            $(`#total-price-${nama}`).html(`Rp ${totalPrice}`);
         } else {
-            $('#preview-laminasi').html(`-`);
+            $(`#total-price-${nama}`).html(`-`);
         }
     }
 
-    $('.card-spakbor').on('click', function () {
-        $('.card-spakbor').removeClass('selected');
-        $(this).addClass('selected');
+    function getSection(tipe_id, section) {
+        customData[section] = null;
+        $(`#preview-${section}`).html(`<div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                        <i class="fas fa-ban" style="font-size: 75px; opacity: .5;"></i>
+                        <span style="font-weight: bold; opacity: .5;">Tanpa sticker</span>
+                    </div>`);
+        $(`#price-${section}`).empty();
 
-        if ($(this).data('id') && $(this).data('url')) {
-            decalMotorData.spakbor = {
-                id: $(this).data('id'),
-                url: $(this).data('url'),
+        $(`#loader-${section}`).html(`<div class="loadingio-spinner-dual-ring-r5iq5osejl">
+            <div class="ldio-c34g0uje79h">
+                <div></div>
+                <div>
+                    <div></div>
+                </div>
+            </div>
+        </div>`);
+
+        $(`#loader-${section}`).show();
+        $(`#list-${section}`).empty();
+
+        ajaxRequest.get({ url: `/user/custom/desain/${tipe_id}/${section}` }).then((res) => {
+            $(`#loader-${section}`).hide();
+            $(`#list-${section}`).html(`
+            <button type="button" class="card card-${section} selected">
+                <div class="selected-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <i class="fas fa-ban"></i>
+                <span>Tanpa Sticker</span>
+            </button>
+
+            ${res
+                .map(
+                    (v) => `
+            <button
+                type="button"
+                class="card card-${section}"
+                style="background-color: #FFF" data-id="${v.id}"
+                data-url="/admins/desain_img/${v.gambar}"
+                data-harga="${v.harga}"
+            >
+                <div class="selected-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <img src="/admins/desain_img/${v.gambar}" class="card-image">
+                <span>${v.nama}</span>
+            </button>`
+                )
+                .join('')}
+
+            <button type="button" class="card card-${section}-upload">
+                <div class="selected-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <i class="fas fa-upload upload-icon"></i>
+                <span class="upload-text">Upload design</span>
+                <span class="upload-loader" style="display: none">Uploading ... </span>
+            </button>
+            <input type="file" id="upload-design-${section}" style="display: none;">
+            `);
+
+            $(`.card-${section}`).on('click', function () {
+                $(`.card-${section}`).removeClass('selected');
+                $(`.card-${section}-upload`).removeClass('selected');
+                $(this).addClass('selected');
+
+                if ($(this).data('id') && $(this).data('url')) {
+                    customData[section] = {
+                        id: $(this).data('id'),
+                        url: $(this).data('url'),
+                        price: parseInt($(this).data('harga')),
+                    };
+
+                    $(`#preview-${section}`).html(`<img src="${$(this).data('url')}" style="width: 100%; height: 100%">`);
+                    $(`#price-${section}`).html(`Rp ${$(this).data('harga')}`);
+                } else {
+                    customData[section] = null;
+                    $(`#preview-${section}`).html(`<div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                        <i class="fas fa-ban" style="font-size: 75px; opacity: .5;"></i>
+                        <span style="font-weight: bold; opacity: .5;">Tanpa sticker</span>
+                    </div>`);
+                    $(`#price-${section}`).empty();
+                }
+
+                calculateTotal();
+            });
+
+            $(`.card-${section}-upload`).on('click', () => $(`#upload-design-${section}`).click());
+            $(`#upload-design-${section}`).on('change', function () {
+                const fileObject = this.files[0];
+                if (fileObject) {
+                    $(`.card-${section}-upload`).attr('disabled', true);
+                    $(`.card-${section}`).attr('disabled', true);
+
+                    $(`.card-${section}-upload`).removeClass('selected');
+                    $(`.card-${section}`).removeClass('selected');
+
+                    $(`.card-${section}-upload .upload-icon`).hide();
+                    $(`.card-${section}-upload .upload-text`).hide();
+                    $(`.card-${section}-upload .upload-loader`).show();
+
+                    const data = new FormData();
+                    data.append('gambar', fileObject);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: `/user/custom/desain/selfupload`,
+                        data: data,
+                        contentType: false,
+                        processData: false,
+                        success: (res) => {
+                            $(`.card-${section}-upload`).removeAttr('disabled');
+                            $(`.card-${section}`).removeAttr('disabled');
+
+                            $(`.card-${section}-upload`).addClass('selected');
+                            $(`.card-${section}`).removeClass('selected');
+
+                            $(`.card-${section}-upload .upload-loader`).hide();
+                            $(`.card-${section}-upload .upload-icon`).show();
+                            $(`.card-${section}-upload .upload-text`).show();
+
+                            customData[section] = {
+                                id: res.id,
+                                url: `/admins/desain_img/${res.gambar}`,
+                                price: res.harga,
+                            };
+
+                            $(`#preview-${section}`).html(`<img src="/admins/desain_img/${res.gambar}" style="width: 100%; height: 100%">`);
+                            $(`#price-${section}`).html(`Rp ${res.harga}`);
+                            calculateTotal();
+                        },
+                    });
+                }
+            });
+        });
+    }
+
+    ajaxRequest.get({ url: `/user/custom/${tipe}/tipe` }).then((res) => {
+        $(`#jenis_${nama}`).html(`
+            <option value="" disabled selected>-- Pilih jenis ${nama} --</option>
+            ${res.map((v) => `<option value="${v.id}">${v.nama}</option>`).join('')}
+        `);
+
+        $(`#jenis_${nama}`).on('change', function () {
+            sections.forEach((section) => getSection($(this).val(), section));
+        });
+    });
+
+    ajaxRequest.get({ url: '/user/custom/general/bahan' }).then((res) => {
+        $(`#bahan-${nama}`).html(`
+        <option value="" disabled selected>-- Pilih bahan --</option>
+        ${res.map((v) => `<option value="${v.id}">${v.nama} - Rp ${v.harga}</option>`).join('')}
+        `);
+
+        $(`#bahan-${nama}`).on('change', function () {
+            const data = res.find((v) => v.id === parseInt($(this).val()));
+            customData.bahan = {
+                id: data.id,
+                price: data.harga,
             };
-        } else {
-            decalMotorData.spakbor = null;
-        }
 
-        setPreview();
+            $(`#preview-bahan-${nama}`).html(`${data.nama} - Rp ${data.harga}`);
+            calculateTotal();
+        });
     });
 
-    $('.card-sayap').on('click', function () {
-        $('.card-sayap').removeClass('selected');
-        $(this).addClass('selected');
+    ajaxRequest.get({ url: '/user/custom/general/laminasi' }).then((res) => {
+        $(`#laminasi-${nama}`).html(`
+        <option value="" disabled selected>-- Pilih laminasi --</option>
+        ${res.map((v) => `<option value="${v.id}">${v.nama} - Rp ${v.harga}</option>`).join('')}
+        `);
 
-        if ($(this).data('id') && $(this).data('url')) {
-            decalMotorData.sayap = {
-                id: $(this).data('id'),
-                url: $(this).data('url'),
+        $(`#laminasi-${nama}`).on('change', function () {
+            const data = res.find((v) => v.id === parseInt($(this).val()));
+            customData.laminasi = {
+                id: data.id,
+                price: data.harga,
             };
-        } else {
-            decalMotorData.sayap = null;
-        }
 
-        setPreview();
+            $(`#preview-laminasi-${nama}`).html(`${data.nama} - Rp ${data.harga}`);
+            calculateTotal();
+        });
     });
 
-    $('#bahan').on('change', function () {
-        if ($(this).val() !== '') {
-            decalMotorData.bahan = $(this).val();
-        } else {
-            decalMotorData.bahan = null;
-        }
-
-        setPreview();
+    $(`#btn-checkout-${nama}`).on('click', function () {
+        console.log(customData);
     });
-
-    $('#laminasi').on('change', function () {
-        if ($(this).val() !== '') {
-            decalMotorData.laminasi = $(this).val();
-        } else {
-            decalMotorData.laminasi = null;
-        }
-
-        setPreview();
-    });
-
-    setPreview();
 }
 
 // end custom page
@@ -255,17 +400,13 @@ function tambah_keranjang() {
                 if (jumlah_keranjang > 0) {
                     $('#badge-keranjang').html(jumlah_keranjang + 1);
                 } else {
-                    $('#keranjang').append(
-                        '<span id="badge-keranjang" class="badge badge-primary badge-notif">1</span>'
-                    );
+                    $('#keranjang').append('<span id="badge-keranjang" class="badge badge-primary badge-notif">1</span>');
                 }
                 toastr.options = {
                     timeOut: '5000',
                 };
 
-                toastr['info'](
-                    '1 item ditambahkan ke keranjang <a href="/keranjang">Lihat keranjang...</a>'
-                );
+                toastr['info']('1 item ditambahkan ke keranjang <a href="/keranjang">Lihat keranjang...</a>');
             },
         });
     });
@@ -302,10 +443,7 @@ function custom_pesanan_submit() {
     } else if ($('#kategori-barang').val().length == 0) {
         alert('Pilih kategori barang');
     } else if ($('#kategori-barang').val() == 'kitchen-set') {
-        if (
-            $('#jumlah-panjang').val().length == 0 ||
-            $('#jumlah-panjang').val() == 0
-        ) {
+        if ($('#jumlah-panjang').val().length == 0 || $('#jumlah-panjang').val() == 0) {
             alert('Tentukan panjang');
         } else if ($('#warna').val().length == 0) {
             alert('Masukan tipe katalog warna');
@@ -328,15 +466,9 @@ function custom_pesanan_submit() {
             });
         }
     } else if ($('#kategori-barang').val() == 'dll') {
-        if (
-            $('#jumlah-panjang').val().length == 0 ||
-            $('#jumlah-panjang').val() == 0
-        ) {
+        if ($('#jumlah-panjang').val().length == 0 || $('#jumlah-panjang').val() == 0) {
             alert('Tentukan panjang');
-        } else if (
-            $('#jumlah-lebar').val().length == 0 ||
-            $('#jumlah-lebar').val() == 0
-        ) {
+        } else if ($('#jumlah-lebar').val().length == 0 || $('#jumlah-lebar').val() == 0) {
             alert('Tentukan lebar');
         } else if ($('#warna').val().length == 0) {
             alert('Masukan tipe katalog warna');

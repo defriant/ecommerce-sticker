@@ -60,9 +60,7 @@ function getBahan() {
                 };
 
                 $('#delete-id-bahan').val(data.id);
-                $('#delete-bahan-warning-message').html(
-                    `Hapus data ${data.nama} ?`
-                );
+                $('#delete-bahan-warning-message').html(`Hapus data ${data.nama} ?`);
                 $('#modal-delete-bahan').modal('show');
             });
         }
@@ -109,9 +107,7 @@ $('#submit-update-bahan').on('click', function () {
     $('#submit-update-bahan').attr('disabled', true);
     ajaxRequest
         .post({
-            url:
-                '/admin/custom/general/bahan/update/' +
-                $('#update-id-bahan').val(),
+            url: '/admin/custom/general/bahan/update/' + $('#update-id-bahan').val(),
             data: params,
         })
         .then((res) => {
@@ -228,9 +224,7 @@ function getLaminasi() {
                 };
 
                 $('#delete-id-laminasi').val(data.id);
-                $('#delete-laminasi-warning-message').html(
-                    `Hapus data ${data.nama} ?`
-                );
+                $('#delete-laminasi-warning-message').html(`Hapus data ${data.nama} ?`);
                 $('#modal-delete-laminasi').modal('show');
             });
         }
@@ -277,9 +271,7 @@ $('#submit-update-laminasi').on('click', function () {
     $('#submit-update-laminasi').attr('disabled', true);
     ajaxRequest
         .post({
-            url:
-                '/admin/custom/general/laminasi/update/' +
-                $('#update-id-laminasi').val(),
+            url: '/admin/custom/general/laminasi/update/' + $('#update-id-laminasi').val(),
             data: params,
         })
         .then((res) => {

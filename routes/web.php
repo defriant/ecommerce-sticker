@@ -79,6 +79,13 @@ Route::group(['middleware' => ['auth', 'customerRole']], function () {
     Route::post('/customer/chat/read', [WebController::class, 'chat_read']);
     Route::get('/customer/komplain/get', [KomplainController::class, 'get']);
     Route::post('/customer/komplain/add', [KomplainController::class, 'add']);
+
+    // custom
+    Route::get('/user/custom/general/bahan', [AdminController::class, 'bahan_list']);
+    Route::get('/user/custom/general/laminasi', [AdminController::class, 'laminasi_list']);
+    Route::get('/user/custom/{tipe}/tipe', [AdminController::class, 'tipe_get']);
+    Route::get('/user/custom/desain/{tipe_id}/{part}', [AdminController::class, 'desain_get']);
+    Route::post('/user/custom/desain/selfupload', [AdminController::class, 'desain_selfupload']);
 });
 
 
@@ -138,6 +145,10 @@ Route::group(['middleware' => ['auth', 'adminRole']], function () {
     Route::post('/admin/custom/{tipe}/tipe/add', [AdminController::class, 'tipe_add']);
     Route::post('/admin/custom/{tipe}/tipe/update', [AdminController::class, 'tipe_update']);
     Route::post('/admin/custom/{tipe}/tipe/delete', [AdminController::class, 'tipe_delete']);
+    Route::get('/admin/custom/desain/{tipe_id}/{part}', [AdminController::class, 'desain_get']);
+    Route::post('/admin/custom/desain/{tipe_id}/{part}/add', [AdminController::class, 'desain_add']);
+    Route::post('/admin/custom/desain/{tipe_id}/{part}/update', [AdminController::class, 'desain_update']);
+    Route::post('/admin/custom/desain/{tipe_id}/{part}/delete', [AdminController::class, 'desain_delete']);
 
     // End Custom
 
