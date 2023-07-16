@@ -13,9 +13,12 @@ use Illuminate\Http\Request;
 use App\Models\PesananBarang;
 use App\Mail\EmailVerification;
 use App\Models\Chat;
+use App\Traits\User\CustomOrder;
 
 class WebController extends Controller
 {
+    use CustomOrder;
+
     public function index()
     {
         $data = Barang::all();
@@ -210,6 +213,7 @@ class WebController extends Controller
         } else {
             $total = $data_barang->harga * $jumlah;
             Keranjang::create([
+                'type' => 'reguler',
                 'user_id' => Auth::user()->id,
                 'barang_id' => $id,
                 'nama' => $data_barang->nama,
@@ -224,7 +228,7 @@ class WebController extends Controller
 
     public function keranjang_total()
     {
-        $ktotal = Auth::user()->keranjang->sum('jumlah');
+        $ktotal = Auth::user()->keranjang()->where('type', 'reguler')->sum('jumlah');
         return response()->json($ktotal);
     }
 
@@ -250,7 +254,7 @@ class WebController extends Controller
 
     public function cek_stok()
     {
-        foreach (Auth::user()->keranjang as $kdata) {
+        foreach (Auth::user()->keranjang()->where('type', 'reguler')->get() as $kdata) {
             $produk = Barang::find($kdata->barang_id);
             if ($kdata->jumlah > $produk->stock) {
                 $response = [
@@ -270,9 +274,19 @@ class WebController extends Controller
 
     public function informasi_pesanan()
     {
-        if (Auth::user()->keranjang->count() > 0) {
-            $total = Keranjang::where('user_id', Auth::user()->id)->sum('total');
+        if (Auth::user()->keranjang()->where('type', 'reguler')->get()->count() > 0) {
+            $total = Keranjang::where('user_id', Auth::user()->id)->where('type', 'reguler')->sum('total');
             return view('user.informasi-pesanan', compact('total'));
+        }
+
+        return redirect('/');
+    }
+
+    public function informasi_pesanan_custom(Request $request)
+    {
+        if (Auth::user()->keranjang()->where('type', 'custom')->get()->count() > 0) {
+            $total = Keranjang::where('user_id', Auth::user()->id)->where('type', 'custom')->sum('total');
+            return view('user.informasi-pesanan-custom', compact('total'));
         }
 
         return redirect('/');
@@ -288,10 +302,11 @@ class WebController extends Controller
         $tgl_sekarang = date("md");
         $id_pesanan = Auth::user()->id . $tgl_sekarang . $random;
 
-        $total = Keranjang::where('user_id', Auth::user()->id)->sum('total');
+        $total = Keranjang::where('user_id', Auth::user()->id)->where('type', 'reguler')->sum('total');
 
         Pesanan::create([
             'id' => $id_pesanan,
+            'type' => 'reguler',
             'user_id' => Auth::user()->id,
             'nama' => $request->nama,
             'telp' => $request->telp,
@@ -300,7 +315,7 @@ class WebController extends Controller
             'status' => 'menunggu_konfirmasi'
         ]);
 
-        foreach (Auth::user()->keranjang as $k) {
+        foreach (Auth::user()->keranjang()->where('type', 'reguler')->get() as $k) {
             PesananBarang::create([
                 'pesanan_id' => $id_pesanan,
                 'barang_id' => $k->barang_id,
@@ -328,7 +343,7 @@ class WebController extends Controller
         $notif_data = ['pesanan_id' => $id_pesanan];
         $pusher->trigger('admin-channel', 'konfirmasi-pesanan-event', $notif_data);
 
-        Keranjang::where('user_id', Auth::user()->id)->delete();
+        Keranjang::where('user_id', Auth::user()->id)->where('type', 'reguler')->delete();
 
         return redirect('/pesanan/' . $id_pesanan);
     }

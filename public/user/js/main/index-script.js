@@ -217,6 +217,7 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
                 type="button"
                 class="card card-${section}"
                 style="background-color: #FFF" data-id="${v.id}"
+                data-nama="${v.nama}"
                 data-url="/admins/desain_img/${v.gambar}"
                 data-harga="${v.harga}"
             >
@@ -245,9 +246,10 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
                 $(`.card-${section}-upload`).removeClass('selected');
                 $(this).addClass('selected');
 
-                if ($(this).data('id') && $(this).data('url')) {
+                if ($(this).data('id') && $(this).data('url') && $(this).data('nama')) {
                     customData[section] = {
                         id: $(this).data('id'),
+                        nama: $(this).data('nama'),
                         url: $(this).data('url'),
                         price: parseInt($(this).data('harga')),
                     };
@@ -302,6 +304,7 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
 
                             customData[section] = {
                                 id: res.id,
+                                nama: 'Self upload',
                                 url: `/admins/desain_img/${res.gambar}`,
                                 price: res.harga,
                             };
@@ -337,6 +340,7 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
             const data = res.find((v) => v.id === parseInt($(this).val()));
             customData.bahan = {
                 id: data.id,
+                nama: data.nama,
                 price: data.harga,
             };
 
@@ -355,6 +359,7 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
             const data = res.find((v) => v.id === parseInt($(this).val()));
             customData.laminasi = {
                 id: data.id,
+                nama: data.nama,
                 price: data.harga,
             };
 
@@ -364,7 +369,14 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
     });
 
     $(`#btn-checkout-${nama}`).on('click', function () {
-        console.log(customData);
+        $(`#btn-checkout-${nama}`).attr('disabled', true);
+
+        ajaxRequest
+            .post({
+                url: '/user/custom/create-order',
+                data: customData,
+            })
+            .then((res) => (location.href = '/custom/informasi-pesanan'));
     });
 }
 

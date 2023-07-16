@@ -86,6 +86,9 @@ Route::group(['middleware' => ['auth', 'customerRole']], function () {
     Route::get('/user/custom/{tipe}/tipe', [AdminController::class, 'tipe_get']);
     Route::get('/user/custom/desain/{tipe_id}/{part}', [AdminController::class, 'desain_get']);
     Route::post('/user/custom/desain/selfupload', [AdminController::class, 'desain_selfupload']);
+    Route::post('/user/custom/create-order', [WebController::class, 'custom_create_order']);
+    Route::get('/custom/informasi-pesanan', [WebController::class, 'informasi_pesanan_custom']);
+    Route::post('/custom/pesanan-proses', [WebController::class, 'custom_pesanan_proses']);
 });
 
 

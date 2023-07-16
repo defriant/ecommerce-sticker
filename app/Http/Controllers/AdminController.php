@@ -220,13 +220,16 @@ class AdminController extends Controller
             'konfirmasi' => date('Y-m-d H:i:s')
         ]);
 
-        foreach ($data_pesanan->pesananbarang as $pb) {
-            $data_barang = Barang::find($pb->barang_id);
-            Barang::where('id', $pb->barang_id)->update([
-                'stock' => $data_barang->stock - $pb->jumlah,
-                'terjual' => $data_barang->terjual + $pb->jumlah
-            ]);
+        if ($data_pesanan->type === 'reguler') {
+            foreach ($data_pesanan->pesananbarang as $pb) {
+                $data_barang = Barang::find($pb->barang_id);
+                Barang::where('id', $pb->barang_id)->update([
+                    'stock' => $data_barang->stock - $pb->jumlah,
+                    'terjual' => $data_barang->terjual + $pb->jumlah
+                ]);
+            }
         }
+
 
         Notifikasi::create([
             'user_id' => $user_id,

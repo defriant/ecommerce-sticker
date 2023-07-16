@@ -45,7 +45,7 @@
     <div class="checkout">
         <div class="container">
             <h3 style="color: orange">Informasi Pesanan</h3>
-            <form id="form-pesan" action="/pesanan-proses" method="POST">
+            <form id="form-pesan" action="/custom/pesanan-proses" method="POST">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="col-sm-12 col-md-7">
@@ -73,9 +73,11 @@
                         <div class="checkout-left-basket" data-wow-delay=".5s" style="width: 100% !important">
                             <br>
                             <ul>
-                                @foreach (Auth::user()->keranjang()->where('type', 'reguler')->get() as $k)
-                                    <li>{{ $k->nama }} &nbsp; x {{ $k->jumlah }} {{ $k->jenis_stock }}<span>Rp
-                                            {{ number_format($k->total) }}</span></li>
+                                @foreach (Auth::user()->keranjang()->where('type', 'custom')->get() as $k)
+                                    <li>
+                                        {{ str_replace('|', ' - ', $k->nama) }}
+                                        <span>Rp {{ number_format($k->total) }}</span>
+                                    </li>
                                 @endforeach
                                 <li>
                                     <hr style="border: 1px solid rgb(201, 201, 201)">
