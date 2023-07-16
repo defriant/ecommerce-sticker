@@ -3,6 +3,7 @@
 namespace App\Traits\Admin;
 
 use App\Models\Custom\Desain;
+use App\Models\Custom\General;
 use App\Models\Custom\Tipe;
 use Illuminate\Http\Request;
 use Str;
@@ -124,9 +125,21 @@ trait CustomPart
             'tipe_id' => 'self_upload',
             'part' => 'self_upload',
             'nama' => $name,
-            'harga' => 50000,
+            'harga' => (int) General::where('tipe', $request->tipe)->first()?->harga,
             'gambar' => $filename
         ]);
+
+        return response()->json($data);
+    }
+
+    // General
+    public function general_list()
+    {
+        $data = [
+            'upload_desain' => (int) General::where('tipe', 'upload_desain')->first()?->harga,
+            'sticker_panjang'  => (int) General::where('tipe', 'sticker_panjang')->first()?->harga,
+            'sticker_lebar'  => (int) General::where('tipe', 'sticker_lebar')->first()?->harga,
+        ];
 
         return response()->json($data);
     }

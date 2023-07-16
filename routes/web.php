@@ -81,6 +81,7 @@ Route::group(['middleware' => ['auth', 'customerRole']], function () {
     Route::post('/customer/komplain/add', [KomplainController::class, 'add']);
 
     // custom
+    Route::get('/user/custom/general', [AdminController::class, 'general_list']);
     Route::get('/user/custom/general/bahan', [AdminController::class, 'bahan_list']);
     Route::get('/user/custom/general/laminasi', [AdminController::class, 'laminasi_list']);
     Route::get('/user/custom/{tipe}/tipe', [AdminController::class, 'tipe_get']);

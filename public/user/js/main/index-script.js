@@ -124,6 +124,10 @@ function getActiveCustomTab(type) {
                     });
                     break;
 
+                case 'sticker':
+                    customStickerScript();
+                    break;
+
                 default:
                     break;
             }
@@ -284,6 +288,7 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
 
                     const data = new FormData();
                     data.append('gambar', fileObject);
+                    data.append('tipe', 'upload_desain');
 
                     $.ajax({
                         type: 'POST',
@@ -370,6 +375,202 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
 
     $(`#btn-checkout-${nama}`).on('click', function () {
         $(`#btn-checkout-${nama}`).attr('disabled', true);
+
+        ajaxRequest
+            .post({
+                url: '/user/custom/create-order',
+                data: customData,
+            })
+            .then((res) => (location.href = '/custom/informasi-pesanan'));
+    });
+}
+
+function customStickerScript() {
+    let panjang = 0;
+    let panjangPrice = 0;
+    let lebar = 0;
+    let lebarPrice = 0;
+    let isUploaded = false;
+
+    const customData = {
+        bahan: {
+            nama: '',
+            price: 0,
+            jumlah: 0,
+        },
+        laminasi: {
+            nama: '',
+            price: 0,
+            jumlah: 0,
+        },
+        sticker: {
+            id: '',
+            nama: '',
+            url: '',
+            price: 0,
+            jumlah: 0,
+        },
+    };
+
+    function calculate() {
+        customData.sticker.nama = `Ukuran ${panjang}x${lebar}`;
+        const totalPanjangPrice = panjang * panjangPrice;
+        const totalLebarPrice = lebar * lebarPrice;
+        customData.sticker.price = totalPanjangPrice + totalLebarPrice;
+
+        const totalStickerPrice = customData.sticker.price * customData.sticker.jumlah;
+        const totalBahanPrice = customData.bahan.price * customData.bahan.jumlah;
+        const totalLaminasiPrice = customData.laminasi.price * customData.laminasi.jumlah;
+        const totalPrice = totalStickerPrice + totalBahanPrice + totalLaminasiPrice;
+
+        if (totalPrice !== 0) {
+            $(`#total-price-sticker`).html(`Rp ${totalPrice}`);
+        } else {
+            $(`#total-price-sticker`).html(`-`);
+        }
+
+        if (
+            parseInt($('#sticker-panjang').val()) !== 0 &&
+            parseInt($('#sticker-lebar').val()) !== 0 &&
+            totalBahanPrice !== 0 &&
+            totalLaminasiPrice !== 0 &&
+            isUploaded
+        ) {
+            $(`#btn-checkout-sticker`).show();
+        } else {
+            $(`#btn-checkout-sticker`).hide();
+        }
+    }
+
+    ajaxRequest.get({ url: '/user/custom/general' }).then((res) => {
+        panjangPrice = res.sticker_panjang;
+        lebarPrice = res.sticker_lebar;
+
+        $('#sticker-panjang-price').html(`Rp ${res.sticker_panjang}/cm`);
+        $('#sticker-lebar-price').html(`Rp ${res.sticker_lebar}/cm`);
+
+        $(`.card-sticker-upload`).on('click', () => $(`#upload-design-sticker`).click());
+        $(`#upload-design-sticker`).on('change', function () {
+            const fileObject = this.files[0];
+            if (fileObject) {
+                $(`.card-sticker-upload`).attr('disabled', true);
+                $(`.card-sticker`).attr('disabled', true);
+
+                $(`.card-sticker-upload`).removeClass('selected');
+                $(`.card-sticker`).removeClass('selected');
+
+                $(`.card-sticker-upload .upload-icon`).hide();
+                $(`.card-sticker-upload .upload-text`).hide();
+                $(`.card-sticker-upload .upload-loader`).show();
+
+                const data = new FormData();
+                data.append('gambar', fileObject);
+                data.append('tipe', 'upload_desain');
+
+                $.ajax({
+                    type: 'POST',
+                    url: `/user/custom/desain/selfupload`,
+                    data: data,
+                    contentType: false,
+                    processData: false,
+                    success: (res) => {
+                        isUploaded = true;
+                        $(`.card-sticker-upload`).removeAttr('disabled');
+                        $(`.card-sticker`).removeAttr('disabled');
+
+                        $(`.card-sticker-upload`).addClass('selected');
+                        $(`.card-sticker`).removeClass('selected');
+
+                        $(`.card-sticker-upload .upload-loader`).hide();
+                        $(`.card-sticker-upload .upload-icon`).show();
+                        $(`.card-sticker-upload .upload-text`).show();
+
+                        customData.sticker.id = res.id;
+                        customData.sticker.url = `/admins/desain_img/${res.gambar}`;
+
+                        $(`#preview-sticker`).attr('src', `/admins/desain_img/${res.gambar}`);
+                        calculate();
+                    },
+                });
+            }
+        });
+
+        $('#sticker-panjang').on('input', function () {
+            panjang = parseInt($(this).val());
+            calculate();
+        });
+
+        $('#sticker-lebar').on('input', function () {
+            lebar = parseInt($(this).val());
+            calculate();
+        });
+
+        $('#sticker-jumlah').on('input', function () {
+            customData.bahan.jumlah = parseInt($(this).val());
+            customData.laminasi.jumlah = parseInt($(this).val());
+            customData.sticker.jumlah = parseInt($(this).val());
+            calculate();
+        });
+
+        $('.input-number').on('keypress', function (e) {
+            let charCode = e.which ? e.which : e.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        });
+
+        $('.input-number').on('change', function () {
+            if ($(this).val() < 0) $(this).val(0).trigger('input');
+        });
+
+        $('.input-number').on('input', function () {
+            if ($(this).val().length === 0) {
+                $(this).val(0).trigger('input');
+            }
+
+            $(this).val(parseInt($(this).val()));
+        });
+
+        $('#sticker-panjang').val(panjang).trigger('input');
+        $('#sticker-lebar').val(lebar).trigger('input');
+        $('#sticker-jumlah').val(customData.sticker.jumlah).trigger('input');
+    });
+
+    ajaxRequest.get({ url: '/user/custom/general/bahan' }).then((res) => {
+        $(`#bahan-sticker`).html(`
+        <option value="" disabled selected>-- Pilih bahan --</option>
+        ${res.map((v) => `<option value="${v.id}">${v.nama} - Rp ${v.harga}</option>`).join('')}
+        `);
+
+        $(`#bahan-sticker`).on('change', function () {
+            const data = res.find((v) => v.id === parseInt($(this).val()));
+            customData.bahan.nama = data.nama;
+            customData.bahan.price = data.harga;
+            calculate();
+        });
+    });
+
+    ajaxRequest.get({ url: '/user/custom/general/laminasi' }).then((res) => {
+        $(`#laminasi-sticker`).html(`
+        <option value="" disabled selected>-- Pilih laminasi --</option>
+        ${res.map((v) => `<option value="${v.id}">${v.nama} - Rp ${v.harga}</option>`).join('')}
+        `);
+
+        $(`#laminasi-sticker`).on('change', function () {
+            const data = res.find((v) => v.id === parseInt($(this).val()));
+            customData.laminasi.nama = data.nama;
+            customData.laminasi.price = data.harga;
+            calculate();
+        });
+    });
+
+    $(`#btn-checkout-sticker`).on('click', function () {
+        customData.bahan.nama = `${customData.bahan.nama} - Rp${customData.bahan.price} x${customData.bahan.jumlah}`;
+        customData.laminasi.nama = `${customData.laminasi.nama} - Rp${customData.laminasi.price} x${customData.laminasi.jumlah}`;
+        customData.sticker.nama = `${customData.sticker.nama} - Rp${customData.sticker.price} x${customData.sticker.jumlah}`;
+
+        $(`#btn-checkout-sticker`).attr('disabled', true);
 
         ajaxRequest
             .post({

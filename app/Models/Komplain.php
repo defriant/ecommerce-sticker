@@ -9,7 +9,7 @@ class Komplain extends Model
 {
     use HasFactory;
 
-    protected $table = 'komplain';
+    protected $table = 'chat_summary';
     protected $fillable = [
         'id',
         'user_id',

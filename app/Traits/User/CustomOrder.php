@@ -22,8 +22,8 @@ trait CustomOrder
                         'barang_id' => 'general',
                         'nama' => ucwords(str_replace('_', ' ', $reqKey)) . '|' . $reqVal['nama'],
                         'harga' => $reqVal['price'],
-                        'jumlah' => 1,
-                        'total' => $reqVal['price'],
+                        'jumlah' => isset($reqVal['jumlah']) ? (int) $reqVal['jumlah'] : 1,
+                        'total' => $reqVal['price'] * (isset($reqVal['jumlah']) ? (int) $reqVal['jumlah'] : 1),
                         'gambar' => null,
                         'url' => null
                     ];
@@ -32,8 +32,8 @@ trait CustomOrder
                         'barang_id' => $reqVal['id'],
                         'nama' => ucwords(str_replace('_', ' ', $reqKey)) . '|' . $reqVal['nama'],
                         'harga' => $reqVal['price'],
-                        'jumlah' => 1,
-                        'total' => $reqVal['price'],
+                        'jumlah' => isset($reqVal['jumlah']) ? (int) $reqVal['jumlah'] : 1,
+                        'total' => $reqVal['price'] * (isset($reqVal['jumlah']) ? (int) $reqVal['jumlah'] : 1),
                         'gambar' => $reqVal['url'],
                         'url' => null
                     ];
