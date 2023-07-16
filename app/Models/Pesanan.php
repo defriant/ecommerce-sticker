@@ -36,6 +36,6 @@ class Pesanan extends Model
 
     public function pesananbarang()
     {
-        return $this->hasMany('App\Models\PesananBarang');
+        return $this->hasMany('App\Models\PesananBarang', 'pesanan_id');
     }
 }
