@@ -190,13 +190,13 @@ class WebController extends Controller
 
     public function keranjang()
     {
-        $total = Keranjang::where('user_id', Auth::user()->id)->sum('total');
+        $total = Keranjang::where('user_id', Auth::user()->id)->where('type', 'reguler')->sum('total');
         return view('user.keranjang', compact('total'));
     }
 
     public function keranjang_data()
     {
-        $total = Keranjang::where('user_id', Auth::user()->id)->sum('total');
+        $total = Keranjang::where('user_id', Auth::user()->id)->where('type', 'reguler')->sum('total');
         return view('user.keranjang-data', compact('total'));
     }
 
