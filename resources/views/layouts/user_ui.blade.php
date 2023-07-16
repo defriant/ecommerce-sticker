@@ -26,7 +26,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('user/js/jquery-2.1.4.min.js') }}"></script>
     <!-- Main CSS -->
     <link href="{{ asset('user/css/vendor.css') }}" rel="stylesheet" type="text/css" media="all" />
-    <link href="{{ asset('user/css/style.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="{{ asset('user/css/style.css?v=' . env('RESOURCE_VERSION')) }}" rel="stylesheet" type="text/css"
+        media="all" />
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('admins/img/favicon.png') }}">
 </head>
 
@@ -229,23 +230,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('admins/vendor/toastr/toastr.min.js') }}"></script>
 
     <!-- Main JS -->
-    <script src="{{ asset('user/js/main/fpComponent.js') }}"></script>
-    <script src="{{ asset('user/js/main/script.js') }}"></script>
-    <script src="{{ asset('user/js/main/regis.js') }}"></script>
-    <script src="{{ asset('user/js/main/detail-pesanan-script.js') }}"></script>
-    <script src="{{ asset('user/js/main/view-script.js') }}"></script>
-    <script src="{{ asset('user/js/main/index-script.js') }}"></script>
+    <script src="{{ asset('user/js/main/fpComponent.js?v=' . env('RESOURCE_VERSION')) }}"></script>
+    <script src="{{ asset('user/js/main/script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
+    <script src="{{ asset('user/js/main/regis.js?v=' . env('RESOURCE_VERSION')) }}"></script>
+    <script src="{{ asset('user/js/main/detail-pesanan-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
+    <script src="{{ asset('user/js/main/view-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
+    <script src="{{ asset('user/js/main/index-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
 
     @if (Request::is('keranjang'))
-        <script src="{{ asset('user/js/main/keranjang-script.js') }}"></script>
+        <script src="{{ asset('user/js/main/keranjang-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
     @endif
 
     @yield('scripts')
 
     @auth
         <input type="hidden" id="user-id" value="{{ Auth::user()->id }}">
-        <script src="{{ asset('user/js/main/notification-script.js') }}"></script>
-        <script src="{{ asset('user/js/main/chat.js') }}"></script>
+        <script src="{{ asset('user/js/main/notification-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
+        <script src="{{ asset('user/js/main/chat.js?v=' . env('RESOURCE_VERSION')) }}"></script>
     @endauth
 </body>
 

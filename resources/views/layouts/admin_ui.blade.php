@@ -19,10 +19,10 @@
     <!-- Datetimepicker css -->
     <link rel="stylesheet" type="text/css" href="{{ asset('admins/datetimepicker/jquery.datetimepicker.css') }}">
     <!-- MAIN CSS -->
-    <link rel="stylesheet" href="{{ asset('admins/css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('admins/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('admins/css/main.css?v=' . env('RESOURCE_VERSION')) }}">
+    <link rel="stylesheet" href="{{ asset('admins/css/style.css?v=' . env('RESOURCE_VERSION')) }}">
     <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-    <link rel="stylesheet" href="{{ asset('admins/css/demo.css') }}">
+    <link rel="stylesheet" href="{{ asset('admins/css/demo.css?v=' . env('RESOURCE_VERSION')) }}">
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
     <!-- ICONS -->
@@ -204,25 +204,25 @@
     <script src="{{ asset('admins/vendor/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('admins/scripts/klorofil-common.js') }}"></script>
     <script src="{{ asset('admins/datetimepicker/build/jquery.datetimepicker.full.min.js') }}"></script>
-    <script src="{{ asset('admins/scripts/main.js') }}"></script>
+    <script src="{{ asset('admins/scripts/main.js?v=' . env('RESOURCE_VERSION')) }}"></script>
 
     @if (Request::is('admin/produk'))
-        <script src="{{ asset('admins/scripts/produk-script.js') }}"></script>
+        <script src="{{ asset('admins/scripts/produk-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
     @endif
 
     @if (Request::is('admin/laporan-transaksi'))
-        <script src="{{ asset('admins/scripts/transactionReport.js') }}"></script>
+        <script src="{{ asset('admins/scripts/transactionReport.js?v=' . env('RESOURCE_VERSION')) }}"></script>
     @endif
 
     @if (Request::is('owner'))
-        <script src="{{ asset('admins/scripts/owner-produk-script.js') }}"></script>
+        <script src="{{ asset('admins/scripts/owner-produk-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
     @endif
 
     @yield('scripts')
 
     @if (Request::is('admin/*'))
-        <script src="{{ asset('admins/scripts/notif-badge-script.js') }}"></script>
-        <script src="{{ asset('admins/scripts/notification-script.js') }}"></script>
+        <script src="{{ asset('admins/scripts/notif-badge-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
+        <script src="{{ asset('admins/scripts/notification-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
     @endif
 
     @if (Request::is('admin/pesanan/*'))
@@ -241,20 +241,20 @@
         </script>
 
         @if (Request::is('admin/custom/general'))
-            <script src="{{ asset('admins/scripts/customs/general_bahan.js') }}"></script>
-            <script src="{{ asset('admins/scripts/customs/general_laminasi.js') }}"></script>
+            <script src="{{ asset('admins/scripts/customs/general_bahan.js?v=' . env('RESOURCE_VERSION')) }}"></script>
+            <script src="{{ asset('admins/scripts/customs/general_laminasi.js?v=' . env('RESOURCE_VERSION')) }}"></script>
         @endif
 
         @if (Request::is('admin/custom/decal-motor'))
-            <script src="{{ asset('admins/scripts/customs/part-script.js') }}"></script>
+            <script src="{{ asset('admins/scripts/customs/part-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
         @endif
 
         @if (Request::is('admin/custom/striping-motor'))
-            <script src="{{ asset('admins/scripts/customs/part-script.js') }}"></script>
+            <script src="{{ asset('admins/scripts/customs/part-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
         @endif
 
         @if (Request::is('admin/custom/decal-mobil'))
-            <script src="{{ asset('admins/scripts/customs/part-script.js') }}"></script>
+            <script src="{{ asset('admins/scripts/customs/part-script.js?v=' . env('RESOURCE_VERSION')) }}"></script>
         @endif
 
         @yield('custom_script')
@@ -262,16 +262,16 @@
 
     @auth
         @if (Auth::user()->role == 'owner')
-            <script src="{{ asset('admins/scripts/owner-chat.js') }}"></script>
+            <script src="{{ asset('admins/scripts/owner-chat.js?v=' . env('RESOURCE_VERSION')) }}"></script>
         @endif
 
         @if (Auth::user()->role == 'admin')
-            <script src="{{ asset('admins/scripts/admin-chat.js') }}"></script>
+            <script src="{{ asset('admins/scripts/admin-chat.js?v=' . env('RESOURCE_VERSION')) }}"></script>
         @endif
     @endauth
 
     @if (Request::is('admin/komplain'))
-        <script src="{{ asset('admins/scripts/komplain.js') }}"></script>
+        <script src="{{ asset('admins/scripts/komplain.js?v=' . env('RESOURCE_VERSION')) }}"></script>
     @endif
     <input type="hidden" id="user-id" value="{{ Auth::user()->id }}">
 </body>
