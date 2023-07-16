@@ -37,6 +37,7 @@ class Pesanan extends Model
     public function pesananbarang()
     {
         // return $this->hasMany('App\Models\PesananBarang', 'pesanan_id');
-        return PesananBarang::where('pesanan_id', $this->id)->get();
+        $data = PesananBarang::where('pesanan_id', (string) $this->id)->get();
+        return $data;
     }
 }
