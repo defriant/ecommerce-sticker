@@ -14,7 +14,7 @@
 <div class="modal-body">
     <div class="row">
         @if ($pesanan->type === 'reguler')
-            @foreach ($pesanan->pesananbarang as $pb)
+            @foreach ($pesanan->pesananbarang() as $pb)
                 <div class="col-xs-6">
                     <div class="pesanan-item" style="margin-top: 12px; margin-bottom: 10px">
                         @if ($pb->barang_id !== 'general')
@@ -36,7 +36,7 @@
             @endforeach
         @endif
         @if ($pesanan->type === 'custom')
-            @foreach ($pesanan->pesananbarang as $pb)
+            @foreach ($pesanan->pesananbarang() as $pb)
                 <div class="col-xs-6">
                     <div class="pesanan-item" style="margin-top: 12px; margin-bottom: 10px">
                         @if ($pb->barang_id !== 'general')

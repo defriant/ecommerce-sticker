@@ -40,7 +40,7 @@
                             <div class="panel-body">
                                 <div class="col-xs-12 col-md-8">
                                     @if ($p->type === 'reguler')
-                                        @foreach ($p->pesananbarang as $pb)
+                                        @foreach ($p->pesananbarang() as $pb)
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="pesanan-item">
                                                     <img src="{{ asset('user/barang_img/' . $pb->gambar) }}" width="70px"
@@ -69,7 +69,7 @@
                                     @endif
 
                                     @if ($p->type === 'custom')
-                                        @foreach ($p->pesananbarang as $pb)
+                                        @foreach ($p->pesananbarang() as $pb)
                                             <div class="col-xs-12 col-sm-6" style="margin-bottom: 2rem;">
                                                 <div class="pesanan-item">
                                                     @if ($pb->barang_id !== 'general')

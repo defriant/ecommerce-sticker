@@ -206,7 +206,7 @@ class AdminController extends Controller
         $data_pesanan = Pesanan::find($id);
         $user_id = $data_pesanan->user_id;
 
-        // foreach ($data_pesanan->pesananbarang as $pb) {
+        // foreach ($data_pesanan->pesananbarang() as $pb) {
         //     $data_barang = Barang::find($pb->barang_id);
         //     if ($data_barang->stock < $pb->jumlah) {
 
@@ -221,7 +221,7 @@ class AdminController extends Controller
         ]);
 
         if ($data_pesanan->type === 'reguler') {
-            foreach ($data_pesanan->pesananbarang as $pb) {
+            foreach ($data_pesanan->pesananbarang() as $pb) {
                 $data_barang = Barang::find($pb->barang_id);
                 Barang::where('id', $pb->barang_id)->update([
                     'stock' => $data_barang->stock - $pb->jumlah,
@@ -501,10 +501,10 @@ class AdminController extends Controller
         $terjual = 0;
 
         foreach ($transaksi as $t) {
-            $terjual = $terjual + $t->pesananBarang->sum('jumlah');
+            $terjual = $terjual + $t->pesananbarang()->sum('jumlah');
 
             $harga = 0;
-            foreach ($t->pesananBarang as $pb) {
+            foreach ($t->pesananbarang() as $pb) {
                 $harga = $harga + ($pb->harga * $pb->jumlah);
             }
 
@@ -512,7 +512,7 @@ class AdminController extends Controller
                 "id" => $t->id,
                 "nama" => $t->nama,
                 "tanggal" => date('d/m/Y', strtotime($t->created_at)),
-                "jumlah_unit" => $t->pesananBarang->sum('jumlah'),
+                "jumlah_unit" => $t->pesananbarang()->sum('jumlah'),
                 "harga" => "Rp " . number_format($harga),
                 "ongkir" => "Rp " . number_format($t->ongkir),
                 "total" => "Rp " . number_format($t->total)

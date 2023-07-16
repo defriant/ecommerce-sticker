@@ -19,7 +19,7 @@
                         <div class="col-xs-12 col-md-8 barang">
                             <hr class="barang-hr">
                             @if ($data->type === 'reguler')
-                                @foreach ($data->pesananbarang as $pb)
+                                @foreach ($data->pesananbarang() as $pb)
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="pesanan-item">
                                             <img src="{{ asset('user/barang_img/' . $pb->gambar) }}" width="70px"
@@ -45,7 +45,7 @@
                             @endif
 
                             @if ($data->type === 'custom')
-                                @foreach ($data->pesananbarang as $pb)
+                                @foreach ($data->pesananbarang() as $pb)
                                     @if ($pb->barang_id !== 'general')
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="pesanan-item">
@@ -77,7 +77,7 @@
                             <hr class="detail-harga-hr">
                             <ul style="list-style-type: none; margin-bottom: 15px" id="detail-harga-barang">
                                 @if ($data->type === 'reguler')
-                                    @foreach ($data->pesananbarang as $pb)
+                                    @foreach ($data->pesananbarang() as $pb)
                                         <li style="margin-bottom: 20px">
                                             <h5 style="font-size: 13px">
                                                 <b>{{ $pb->nama }}</b>
@@ -90,7 +90,7 @@
                                     @endforeach
                                 @endif
                                 @if ($data->type === 'custom')
-                                    @foreach ($data->pesananbarang as $pb)
+                                    @foreach ($data->pesananbarang() as $pb)
                                         <li style="margin-bottom: 20px">
                                             <h5 style="font-size: 13px">
                                                 <b>{{ explode('|', $pb->nama)[0] }}</b>
