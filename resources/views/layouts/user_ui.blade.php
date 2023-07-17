@@ -147,8 +147,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <li><i class="glyphicon glyphicon-map-marker" aria-hidden="true"></i>Alamat : Jl. K.H.
                                 Agus Salim RT 11 RW 03 No. 153, Kelurahan Kepanjen, Kecamatan Kepanjen, Kabupaten Malang
                             </li>
-                            <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>Email :
-                                Lorem.@Lorem.com</li>
+                            {{-- <li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>Email :
+                                Lorem.@Lorem.com</li> --}}
                             <li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>Telp : 0821-1507-5160
                             </li>
                         </ul>
