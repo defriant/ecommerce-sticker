@@ -165,8 +165,8 @@
                                 <li>
                                     <h5 style="font-size: 12px; margin-bottom: 7px; margin-left: 7px;">Bank BCA</h5>
                                     <h5 style="font-size: 12px; margin-bottom: 7px; margin-left: 7px;">No. Rekening
-                                        8850827118</h5>
-                                    <h5 style="font-size: 12px; margin-bottom: 7px; margin-left: 7px;">A/N Dicky Wahyudi
+                                        2980187489</h5>
+                                    <h5 style="font-size: 12px; margin-bottom: 7px; margin-left: 7px;">a/n M Syahril
                                     </h5>
                                 </li>
                                 <li>
