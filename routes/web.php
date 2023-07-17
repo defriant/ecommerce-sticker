@@ -127,6 +127,8 @@ Route::group(['middleware' => ['auth', 'adminRole']], function () {
 
     // Custom
     Route::get('/admin/custom/general', [AdminController::class, 'custom_general']);
+    Route::get('/admin/custom/general/list', [AdminController::class, 'general_list']);
+    Route::post('/admin/custom/general/list/update', [AdminController::class, 'general_list_update']);
     Route::get('/admin/custom/general/bahan', [AdminController::class, 'bahan_list']);
     Route::post('/admin/custom/general/bahan/add', [AdminController::class, 'bahan_add']);
     Route::post('/admin/custom/general/bahan/update/{id}', [AdminController::class, 'bahan_update']);

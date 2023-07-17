@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>KLINIK RENITA PETCARE</title>
+    <title>Administrator - Orion Decal Factory</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -26,8 +26,8 @@
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
     <!-- ICONS -->
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('admins/img/apple-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('admins/img/favicon.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('logo/logo_2.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('logo/logo_2.png') }}">
 </head>
 
 <body class="@if (Auth::user()->role == 'owner') layout-fullwidth @endif">
@@ -36,7 +36,7 @@
         <!-- NAVBAR -->
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="brand">
-                <a href="/admin/produk"><img src="{{ asset('logo/logo.jpeg') }}" class="logo" alt="LOGO"></a>
+                <a href="/admin/produk"><img src="{{ asset('logo/logo_2.png') }}" class="logo" alt="LOGO"></a>
             </div>
             <div class="container-fluid">
                 @if (Auth::user()->role == 'admin')
@@ -99,7 +99,7 @@
                             <li>
                                 <a id="custom" href="#customPage" data-toggle="collapse" class="collapsed"
                                     aria-expanded="false">
-                                    <i class="far fa-sack-dollar"></i> <span>Custom</span> <i
+                                    <i class="far fa-cog"></i> <span>Custom</span> <i
                                         class="icon-submenu lnr lnr-chevron-left"></i>
                                 </a>
                                 <div id="customPage" class="collapse" aria-expanded="false" style="height: 0px;">
@@ -241,6 +241,7 @@
         </script>
 
         @if (Request::is('admin/custom/general'))
+            <script src="{{ asset('admins/scripts/customs/general.js?v=' . env('RESOURCE_VERSION')) }}"></script>
             <script src="{{ asset('admins/scripts/customs/general_bahan.js?v=' . env('RESOURCE_VERSION')) }}"></script>
             <script src="{{ asset('admins/scripts/customs/general_laminasi.js?v=' . env('RESOURCE_VERSION')) }}"></script>
         @endif

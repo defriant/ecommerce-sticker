@@ -143,4 +143,19 @@ trait CustomPart
 
         return response()->json($data);
     }
+
+    public function general_list_update(Request $request)
+    {
+        General::where('tipe', 'upload_desain')->first()->update([
+            'harga' => $request->upload_desain
+        ]);
+        General::where('tipe', 'sticker_panjang')->first()->update([
+            'harga' => $request->sticker_panjang
+        ]);
+        General::where('tipe', 'sticker_lebar')->first()->update([
+            'harga' => $request->sticker_lebar
+        ]);
+
+        return response()->json('General data berhasil di simpan');
+    }
 }

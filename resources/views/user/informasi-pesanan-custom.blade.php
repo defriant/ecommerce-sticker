@@ -68,9 +68,14 @@
                             <span id="info-alamat" style="font-size: 12px; color: #999"><i>* Alamat tujuan
                                     pengiriman</i></span>
                         </div>
+                        <div class="input-group" style="width: 80%">
+                            <h5 class="form-title">Catatan :</h5>
+                            <textarea id="catatan" type="text" name="catatan" class="form-control" style="height: 150px; resize: none"></textarea>
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-5">
-                        <div class="checkout-left-basket" data-wow-delay=".5s" style="width: 100% !important">
+                        <div class="checkout-left-basket" data-wow-delay=".5s"
+                            style="width: 100% !important; margin-bottom: 1rem;">
                             <br>
                             <ul>
                                 @foreach (Auth::user()->keranjang()->where('type', 'custom')->get() as $k)
@@ -88,9 +93,6 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-md-7"></div>
-                    <div class="col-sm-12 col-md-5">
                         <div class="pembayaran">
                             <ul>
                                 <li>
@@ -117,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="margin-top: 50px;">
+                <div class="row" style="margin-top: 75px;">
                     <div style="text-align: center;">
                         <button id="btn-kembali" class="btn-bottom" type="button">
                             <h5><i class="fas fa-chevron-left" style="margin-right: 10px"></i> Kembali</h5>
@@ -141,7 +143,7 @@
 
         $('[data-toggle="tooltip"]').tooltip();
 
-        $('#submit-pesan').on('click', function() {
+        $('#submit-pesan').on('click', function(e) {
             if ($('#nama').val().length == 0) {
                 $('#nama').addClass('invalid');
             } else if ($('#telp').val().length == 0) {
@@ -150,9 +152,9 @@
                 $('#alamat').addClass('invalid');
             } else {
                 $('#form-pesan').submit();
-                $('#form-pesan').on('submit', function(e) {
-                    e.preventDefault();
-                })
+                // $('#form-pesan').on('submit', function(e) {
+                //     e.preventDefault();
+                // })
             }
         })
     })

@@ -10,6 +10,9 @@
     <h5>Pesanan Oleh, <b>{{ $pesanan->nama }}</b></h5>
     <h5>{{ $pesanan->telp }}</h5>
     <h5>{{ $pesanan->alamat }}</h5>
+    @if ($pesanan->catatan)
+        <h5>Catatan : {{ $pesanan->catatan }}</h5>
+    @endif
 </div>
 <div class="modal-body">
     <div class="row">

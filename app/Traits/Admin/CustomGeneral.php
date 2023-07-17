@@ -3,6 +3,7 @@
 namespace App\Traits\Admin;
 
 use App\Models\Custom\Bahan;
+use App\Models\Custom\General;
 use App\Models\Custom\Laminasi;
 use Illuminate\Http\Request;
 

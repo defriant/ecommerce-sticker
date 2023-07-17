@@ -107,7 +107,14 @@ $('#form-tambah-produk').submit(function (e) {
             contentType: false,
             processData: false,
             success: function (result) {
-                produk_data();
+                $.ajax({
+                    type: 'get',
+                    url: '/admin/produk-data/' + $('input[name="kategori"]:checked').val(),
+                    success: function (data) {
+                        $('#produk').html(data);
+                    },
+                });
+                // produk_data();
                 $('#modal-tambah-close').click();
                 $('#tambah-gambar-preview-1').attr('style', `background-image: url(${gambar_default});`);
                 $('#tambah-gambar-preview-2').attr('style', `background-image: url(${gambar_default});`);

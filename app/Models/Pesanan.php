@@ -17,6 +17,7 @@ class Pesanan extends Model
         'nama',
         'telp',
         'alamat',
+        'catatan',
         'ongkir',
         'total',
         'status',

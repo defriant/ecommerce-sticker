@@ -17,6 +17,9 @@
                 <h5>Pesanan oleh, <b>{{ $d->nama }}</b></h5>
                 <h5>{{ $d->alamat }}</h5>
                 <h5>Telp : {{ $d->telp }}</h5>
+                @if ($d->catatan)
+                    <h5>Catatan : {{ $d->catatan }}</h5>
+                @endif
             </div>
             <div class="panel-body">
                 <div class="col-xs-12 col-md-8">

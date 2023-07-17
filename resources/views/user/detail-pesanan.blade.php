@@ -12,6 +12,11 @@
                             <h5 style="font-size: 13px; margin-top: 7px">Dikirim kepada, <b>{{ $data->nama }}</b></h5>
                             <h5 style="font-size: 13px; margin-top: 7px">{{ $data->alamat }}</h5>
                             <h5 style="font-size: 13px; margin-top: 7px">Telp : {{ $data->telp }}</h5>
+                            @if ($data->catatan)
+                                <br>
+                                <h5 style="font-size: 13px; margin-top: 7px">Catatan : {{ $data->catatan }}</h5>
+                                <br>
+                            @endif
                             <hr class="panel-head-hr">
                         </div>
                     </div>
@@ -49,7 +54,8 @@
                                     @if ($pb->barang_id !== 'general')
                                         <div class="col-xs-12 col-sm-6">
                                             <div class="pesanan-item">
-                                                <img src="{{ $pb->gambar }}" width="70px" height="70px" alt="">
+                                                <img src="{{ $pb->gambar }}" width="70px" height="70px"
+                                                    alt="">
                                                 <ul style="list-style-type: none">
                                                     <li>
                                                         <h5 style="font-size: 13px; margin-left: 10px">

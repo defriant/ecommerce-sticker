@@ -79,6 +79,7 @@ trait CustomOrder
             'nama' => $request->nama,
             'telp' => $request->telp,
             'alamat' => $request->alamat,
+            'catatan' => $request->catatan,
             'total' => $total,
             'status' => 'menunggu_konfirmasi'
         ]);
