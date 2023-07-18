@@ -48,7 +48,7 @@
             <form id="form-pesan" action="/custom/pesanan-proses" method="POST">
                 {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-sm-12 col-md-7">
+                    <div class="col-sm-12 col-md-6">
                         <div class="input-group" style="width: 80%">
                             <h5 class="form-title">Pemesan :</h5>
                             <input id="nama" type="text" name="nama" class="form-control"
@@ -73,7 +73,7 @@
                             <textarea id="catatan" type="text" name="catatan" class="form-control" style="height: 150px; resize: none"></textarea>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-5">
+                    <div class="col-sm-12 col-md-6">
                         <div class="checkout-left-basket" data-wow-delay=".5s"
                             style="width: 100% !important; margin-bottom: 1rem;">
                             <br>

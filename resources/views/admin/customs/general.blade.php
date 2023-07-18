@@ -14,7 +14,7 @@
                                     <span class="input-group-addon">Rp</span>
                                     <input class="form-control input-number" type="text" id="general-upload_desain">
                                 </div>
-                                <br>
+                                {{-- <br>
                                 <p>Harga sticker (panjang)</p>
                                 <div class="input-group" style="width: 400px">
                                     <span class="input-group-addon">Rp</span>
@@ -27,7 +27,7 @@
                                     <span class="input-group-addon">Rp</span>
                                     <input class="form-control input-number" type="text" id="general-sticker_lebar">
                                     <span class="input-group-addon">/cm</span>
-                                </div>
+                                </div> --}}
                             </div>
                             <br>
                             <br>

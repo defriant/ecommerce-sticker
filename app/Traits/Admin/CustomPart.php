@@ -125,7 +125,7 @@ trait CustomPart
             'tipe_id' => 'self_upload',
             'part' => 'self_upload',
             'nama' => $name,
-            'harga' => (int) General::where('tipe', $request->tipe)->first()?->harga,
+            'harga' => (int) General::where('tipe', '')->first()?->harga,
             'gambar' => $filename
         ]);
 
@@ -137,8 +137,10 @@ trait CustomPart
     {
         $data = [
             'upload_desain' => (int) General::where('tipe', 'upload_desain')->first()?->harga,
-            'sticker_panjang'  => (int) General::where('tipe', 'sticker_panjang')->first()?->harga,
-            'sticker_lebar'  => (int) General::where('tipe', 'sticker_lebar')->first()?->harga,
+            // 'sticker_panjang'  => (int) General::where('tipe', 'sticker_panjang')->first()?->harga,
+            // 'sticker_lebar'  => (int) General::where('tipe', 'sticker_lebar')->first()?->harga,
+            'sticker_panjang'  => 0,
+            'sticker_lebar'  => 0,
         ];
 
         return response()->json($data);
@@ -149,12 +151,12 @@ trait CustomPart
         General::where('tipe', 'upload_desain')->first()->update([
             'harga' => $request->upload_desain
         ]);
-        General::where('tipe', 'sticker_panjang')->first()->update([
-            'harga' => $request->sticker_panjang
-        ]);
-        General::where('tipe', 'sticker_lebar')->first()->update([
-            'harga' => $request->sticker_lebar
-        ]);
+        // General::where('tipe', 'sticker_panjang')->first()->update([
+        //     'harga' => $request->sticker_panjang
+        // ]);
+        // General::where('tipe', 'sticker_lebar')->first()->update([
+        //     'harga' => $request->sticker_lebar
+        // ]);
 
         return response()->json('General data berhasil di simpan');
     }

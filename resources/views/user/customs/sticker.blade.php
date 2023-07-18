@@ -18,16 +18,16 @@
     <div class="custom-page-section">
         <div style="display: flex; align-items: center; justify-content: center; gap: 30px;">
             <div class="input-group">
-                <h5 style="margin-bottom: .5rem; font-weight: 600; text-align: center;">Panjang (cm)</h5>
+                <h5 style="margin-bottom: .5rem; font-weight: 600; text-align: center;">Panjang (m)</h5>
                 <input type="number" id="sticker-panjang" class="form-control input-number"
                     style="width: 185px; margin-bottom: .5rem">
-                <p style="font-size: 14px; margin: 0; text-align: center;" id="sticker-panjang-price">-</p>
+                {{-- <p style="font-size: 14px; margin: 0; text-align: center;" id="sticker-panjang-price">-</p> --}}
             </div>
             <div class="input-group">
-                <h5 style="margin-bottom: .5rem; font-weight: 600; text-align: center;">Lebar (cm)</h5>
+                <h5 style="margin-bottom: .5rem; font-weight: 600; text-align: center;">Lebar (m)</h5>
                 <input type="number" id="sticker-lebar" class="form-control input-number"
                     style="width: 185px; margin-bottom: .5rem">
-                <p style="font-size: 14px; margin: 0; text-align: center;" id="sticker-lebar-price">-</p>
+                {{-- <p style="font-size: 14px; margin: 0; text-align: center;" id="sticker-lebar-price">-</p> --}}
             </div>
         </div>
 

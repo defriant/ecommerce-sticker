@@ -288,7 +288,6 @@ function initiateCustomScript({ tipe = '', nama = '', sections = [] }) {
 
                     const data = new FormData();
                     data.append('gambar', fileObject);
-                    data.append('tipe', 'upload_desain');
 
                     $.ajax({
                         type: 'POST',
@@ -390,6 +389,8 @@ function customStickerScript() {
     let panjangPrice = 0;
     let lebar = 0;
     let lebarPrice = 0;
+    let bahanPrice = 0;
+    let laminasiPrice = 0;
     let isUploaded = false;
 
     const customData = {
@@ -414,14 +415,12 @@ function customStickerScript() {
 
     function calculate() {
         customData.sticker.nama = `Ukuran ${panjang}x${lebar}`;
-        const totalPanjangPrice = panjang * panjangPrice;
-        const totalLebarPrice = lebar * lebarPrice;
-        customData.sticker.price = totalPanjangPrice + totalLebarPrice;
 
-        const totalStickerPrice = customData.sticker.price * customData.sticker.jumlah;
-        const totalBahanPrice = customData.bahan.price * customData.bahan.jumlah;
-        const totalLaminasiPrice = customData.laminasi.price * customData.laminasi.jumlah;
-        const totalPrice = totalStickerPrice + totalBahanPrice + totalLaminasiPrice;
+        bahanPrice = panjang * lebar * customData.bahan.price;
+        laminasiPrice = panjang * lebar * customData.laminasi.price;
+
+        let totalPrice = bahanPrice + laminasiPrice;
+        totalPrice = totalPrice * customData.sticker.jumlah;
 
         if (totalPrice !== 0) {
             $(`#total-price-sticker`).html(`Rp ${totalPrice}`);
@@ -432,8 +431,8 @@ function customStickerScript() {
         if (
             parseInt($('#sticker-panjang').val()) !== 0 &&
             parseInt($('#sticker-lebar').val()) !== 0 &&
-            totalBahanPrice !== 0 &&
-            totalLaminasiPrice !== 0 &&
+            $('#bahan-sticker').val() !== null &&
+            $('#laminasi-sticker').val() !== null &&
             isUploaded
         ) {
             $(`#btn-checkout-sticker`).show();
@@ -465,7 +464,6 @@ function customStickerScript() {
 
                 const data = new FormData();
                 data.append('gambar', fileObject);
-                data.append('tipe', 'upload_desain');
 
                 $.ajax({
                     type: 'POST',
@@ -566,16 +564,26 @@ function customStickerScript() {
     });
 
     $(`#btn-checkout-sticker`).on('click', function () {
-        customData.bahan.nama = `${customData.bahan.nama} - Rp${customData.bahan.price} x${customData.bahan.jumlah}`;
-        customData.laminasi.nama = `${customData.laminasi.nama} - Rp${customData.laminasi.price} x${customData.laminasi.jumlah}`;
-        customData.sticker.nama = `${customData.sticker.nama} - Rp${customData.sticker.price} x${customData.sticker.jumlah}`;
+        const data = {
+            bahan: {
+                nama: `${customData.bahan.nama} - Rp${bahanPrice} x${customData.bahan.jumlah}`,
+                price: bahanPrice,
+                jumlah: customData.bahan.jumlah,
+            },
+            laminasi: {
+                nama: `${customData.laminasi.nama} - Rp${laminasiPrice} x${customData.laminasi.jumlah}`,
+                price: laminasiPrice,
+                jumlah: customData.laminasi.jumlah,
+            },
+            sticker: customData.sticker,
+        };
 
         $(`#btn-checkout-sticker`).attr('disabled', true);
 
         ajaxRequest
             .post({
                 url: '/user/custom/create-order',
-                data: customData,
+                data: data,
             })
             .then((res) => (location.href = '/custom/informasi-pesanan'));
     });
